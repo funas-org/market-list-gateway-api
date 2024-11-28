@@ -1,0 +1,90 @@
+networks:
+  kong-net:
+    external: true
+    driver: bridge
+
+services:
+  auth-service:
+    hostname: auth-service
+    build:
+      context: ./../auth-service
+      dockerfile: Dockerfile
+    container_name: auth-service
+    ports:
+      - 8002:8000
+    networks:
+      - kong-net
+    environment:
+      GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID}
+      GOOGLE_SECRET: ${GOOGLE_SECRET}
+      GOOGLE_CALLBACK_URL: ${GOOGLE_CALLBACK_URL}
+      CUSTOM_PORT: ${CUSTOM_PORT}
+      JWT_SECRET: ${JWT_SECRET}
+      JWT_EXPIRES_IN: ${JWT_EXPIRES_IN}
+  
+  product-service:
+    hostname: product-service
+    build:
+      context: ./../product-service
+      dockerfile: Dockerfile
+    container_name: product-service
+    ports:
+      - 3001:3000
+    networks:
+      - kong-net
+    environment:
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_NAME: ${DB_NAME}
+      DB_PORT: ${DB_PORT}
+      DB_HOST: ${DB_HOST}
+      DB_DIALECT: ${DB_DIALECT}
+      PORT: ${PORT}
+      WISHLIST_SERVICE_BASE_URL: ${WISHLIST_SERVICE_BASE_URL}
+      JWT_SECRET: ${JWT_SECRET}
+    
+  wishlist-service:
+    hostname: wishlist-service
+    build:
+      context: ./../whishlist-service
+      dockerfile: Dockerfile
+    container_name: wishlist-service
+    ports:
+      - 3000:3000
+    networks:
+      - kong-net
+    environment:
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_NAME: ${DB_NAME}
+      DB_PORT: ${DB_PORT}
+      DB_HOST: ${DB_HOST}
+      DB_DIALECT: ${DB_DIALECT}
+      PRODUCT_SERVICE_BASE_URL: ${PRODUCT_SERVICE_BASE_URL}
+      JWT_SECRET: ${JWT_SECRET}
+
+  kong-service-db-less:
+    image: "kong:3.8.0-ubuntu"
+    container_name: kong-service-db-less-name
+    depends_on:
+      - auth-service
+      - product-service
+      - wishlist-service
+    ports:
+      - 8000:8000
+      - 8443:8443
+      - 127.0.0.1:8001:8001
+      - 127.0.0.1:8444:8444
+    environment:
+      KONG_DATABASE: "off"
+      KONG_DECLARATIVE_CONFIG: /kong/declarative/kong.yml
+      KONG_PROXY_ACCESS_LOG: /dev/stdout
+      KONG_ADMIN_ACCESS_LOG: /dev/stdout
+      KONG_PROXY_ERROR_LOG: /dev/stderr
+      KONG_ADMIN_ERROR_LOG: /dev/stderr
+      KONG_ADMIN_LISTEN: 0.0.0.0:8001, 0.0.0.0:8444 ssl
+      KONG_ADMIN_GUI_URL: "http://localhost:8002"
+    volumes:
+      - .:/kong/declarative
+    networks:
+      - kong-net

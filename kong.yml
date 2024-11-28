@@ -1,0 +1,41 @@
+_format_version: "3.0"
+_transform: true
+
+services:
+- host: auth-service
+  name: auth-service
+  port: 8000
+  protocol: http
+  retries: 5
+  routes:
+  - name: google-login
+    paths:
+    - /auth
+    strip_path: true
+- host: wishlist-service
+  name: wishlist-service
+  port: 3000
+  protocol: http
+  retries: 5
+  routes:
+  - name: get-wishlist-by-id
+    paths:
+    - /wishlist
+    strip_path: true
+- host: product-service
+  name: product-service
+  port: 3000
+  protocol: http
+  retries: 5
+  routes:
+  - name: product
+    paths:
+    - /product
+    strip_path: true
+
+plugins:
+- name: request-transformer
+  config:
+    add:
+      headers:
+      - "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imxlby5mdW5hQGdtYWlsLmNvbSIsImlhdCI6MTczMjgwMDk1NiwiZXhwIjoxNzMyODg3MzU2fQ.VUA1J45RCus6UbGmg7DoO9Q0TBQavNlxMYZlSiWHwe0"

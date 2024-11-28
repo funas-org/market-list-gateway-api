@@ -1,0 +1,33 @@
+### LOGIN
+GET http://localhost:8000/auth/google/login
+
+### Callback
+GET http://localhost:8000/auth/google/callback
+
+
+### Wishlist
+#### Pega wishlist pelo Id
+GET http://localhost:8000/wishlist/4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imxlby5mdW5hQGdtYWlsLmNvbSIsImlhdCI6MTczMjgwMDk1NiwiZXhwIjoxNzMyODg3MzU2fQ.VUA1J45RCus6UbGmg7DoO9Q0TBQavNlxMYZlSiWHwe0
+
+#### Pega wishlist pelo usuário logado
+GET http://localhost:8000/wishlist/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imxlby5mdW5hQGdtYWlsLmNvbSIsImlhdCI6MTczMjgwMDk1NiwiZXhwIjoxNzMyODg3MzU2fQ.VUA1J45RCus6UbGmg7DoO9Q0TBQavNlxMYZlSiWHwe0
+
+### Cria uma wishlist
+POST http://localhost:8000/wishlist/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imxlby5mdW5hQGdtYWlsLmNvbSIsImlhdCI6MTczMjgwMDk1NiwiZXhwIjoxNzMyODg3MzU2fQ.VUA1J45RCus6UbGmg7DoO9Q0TBQavNlxMYZlSiWHwe0
+
+{
+  "name": "Wishlist novissima"
+}
+
+#### Atualiza uma wishlist pelo id
+PUT http://localhost:8000/wishlist/5
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imxlby5mdW5hQGdtYWlsLmNvbSIsImlhdCI6MTczMjgwMDk1NiwiZXhwIjoxNzMyODg3MzU2fQ.VUA1J45RCus6UbGmg7DoO9Q0TBQavNlxMYZlSiWHwe0
+Content-Type: application/json
+
+{
+  "name": "Wishlist 5 - ajustada"
+}
