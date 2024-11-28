@@ -31,3 +31,35 @@ Content-Type: application/json
 {
   "name": "Wishlist 5 - ajustada"
 }
+
+### PRODUCTS
+#### Pega todos os produtos de uma wishlist
+GET http://localhost:8000/product/wishlist-products/5
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imxlby5mdW5hQGdtYWlsLmNvbSIsImlhdCI6MTczMjgwMDk1NiwiZXhwIjoxNzMyODg3MzU2fQ.VUA1J45RCus6UbGmg7DoO9Q0TBQavNlxMYZlSiWHwe0
+
+#### Cria um produto
+POST http://localhost:8000/product/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imxlby5mdW5hQGdtYWlsLmNvbSIsImlhdCI6MTczMjgwMDk1NiwiZXhwIjoxNzMyODg3MzU2fQ.VUA1J45RCus6UbGmg7DoO9Q0TBQavNlxMYZlSiWHwe0
+
+{
+  "name": "Produto 1 - kong",
+  "wishlistId": 5,
+  "category": "Feira",
+  "priceInCents": 0
+}
+
+#### Atualiza um produto
+PUT http://localhost:8000/product/4
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imxlby5mdW5hQGdtYWlsLmNvbSIsImlhdCI6MTczMjgwMDk1NiwiZXhwIjoxNzMyODg3MzU2fQ.VUA1J45RCus6UbGmg7DoO9Q0TBQavNlxMYZlSiWHwe0
+
+{
+  "name": "Produto 1",
+  "priceInCents": 1,
+  "category": "Feira"
+}
+
+#### Atualiza um produto
+PUT http://localhost:8000/product/4/active-toggle
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imxlby5mdW5hQGdtYWlsLmNvbSIsImlhdCI6MTczMjgwMDk1NiwiZXhwIjoxNzMyODg3MzU2fQ.VUA1J45RCus6UbGmg7DoO9Q0TBQavNlxMYZlSiWHwe0
