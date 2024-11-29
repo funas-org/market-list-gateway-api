@@ -8,10 +8,12 @@ services:
     hostname: auth-service
     build:
       context: ./../auth-service
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile-dev
     container_name: auth-service
     ports:
       - 8002:8000
+    volumes:
+      - ./../auth-service:/app
     networks:
       - kong-net
     environment:
@@ -26,10 +28,12 @@ services:
     hostname: product-service
     build:
       context: ./../product-service
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile-dev
     container_name: product-service
     ports:
       - 3001:3000
+    volumes:
+      - ./../product-service:/app
     networks:
       - kong-net
     environment:
@@ -47,10 +51,12 @@ services:
     hostname: wishlist-service
     build:
       context: ./../whishlist-service
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile-dev
     container_name: wishlist-service
     ports:
       - 3000:3000
+    volumes:
+      - ./../whishlist-service:/app
     networks:
       - kong-net
     environment:
